@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Nandini Kongani, Data Engineer: Snowflake, dbt, Databricks, Airflow, Azure and healthcare claims data.">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>Nandini Kongani</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Manrope:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: full-bleed stacked "model" panels (Tesla-style), each a role or project with a spec bar and two CTAs; then a white spec sheet for skills. Single deliberate look: dark panels + white spec pages. */
+:root{
+  --ink:#171a20;          /* Tesla-like near-black text */
+  --paper:#ffffff;
+  --mist:#f4f4f4;
+  --steel:#5c5e62;
+  --line:#d0d1d2;
+  --glass:rgba(23,26,32,.62);
+  --signal:#3e6ae1;       /* single accent, used sparingly */
+  --f-display:"Montserrat","Gotham","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Manrope","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+
+/* ---------- NAV ---------- */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:calc(env(safe-area-inset-top,0px) + 14px) 28px 14px;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:background .3s,color .3s,box-shadow .3s;color:#fff}
+.nav.solid{background:rgba(255,255,255,.92);backdrop-filter:blur(10px);color:var(--ink);box-shadow:0 1px 0 rgba(0,0,0,.06)}
+.brand{font-family:var(--f-display);font-weight:600;letter-spacing:.42em;font-size:13px;text-decoration:none;white-space:nowrap}
+.links{display:flex;gap:4px}
+.links a,.nav-right a,.menu-btn{font-family:var(--f-body);font-weight:600;font-size:13px;text-decoration:none;padding:7px 14px;border-radius:4px;transition:background .25s}
+.links a:hover,.nav-right a:hover,.menu-btn:hover{background:rgba(127,127,127,.18)}
+.nav-right{display:flex;gap:4px;align-items:center}
+.menu-btn{display:none;background:rgba(127,127,127,.16);border:0;color:inherit;cursor:pointer}
+.drawer{position:fixed;inset:0 0 0 auto;width:min(320px,86vw);background:#fff;color:var(--ink);z-index:60;padding:calc(env(safe-area-inset-top,0px) + 70px) 24px 24px;transform:translateX(100%);transition:transform .35s ease;display:flex;flex-direction:column;gap:4px;box-shadow:-10px 0 40px rgba(0,0,0,.2)}
+.drawer.open{transform:none}
+.drawer a{font-weight:600;font-size:15px;text-decoration:none;padding:12px 14px;border-radius:6px}
+.drawer a:hover{background:var(--mist)}
+.drawer .close{position:absolute;top:calc(env(safe-area-inset-top,0px) + 18px);right:20px;border:0;background:none;font-size:22px;cursor:pointer;color:var(--ink);padding:6px 10px}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:55;opacity:0;pointer-events:none;transition:opacity .3s}
+.scrim.open{opacity:1;pointer-events:auto}
+@media (max-width:900px){.links{display:none}.nav-right a{display:none}.menu-btn{display:block}}
+
+/* ---------- PANELS ---------- */
+.panel{position:relative;min-height:92vh;min-height:92svh;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;padding:calc(env(safe-area-inset-top,0px) + 108px) 20px 48px;overflow:hidden;color:#fff;isolation:isolate}
+.panel .bg{position:absolute;inset:0;z-index:-1}
+.panel.light{color:var(--ink)}
+.eyebrow{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;opacity:.8;margin:0 0 14px}
+.panel h1,.panel h2{font-family:var(--f-display);font-weight:500;font-size:clamp(34px,5.4vw,52px);line-height:1.08;letter-spacing:-.005em;margin:0;text-wrap:balance}
+.panel .sub{font-size:clamp(14px,1.5vw,16px);margin:12px auto 0;max-width:56ch;opacity:.9;text-wrap:balance}
+.panel .sub a{text-underline-offset:3px}
+.bottom{display:flex;flex-direction:column;align-items:center;gap:28px;width:100%;max-width:1040px}
+
+.specs{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 48px;margin:0;padding:0;list-style:none}
+.specs li{display:flex;flex-direction:column;align-items:center;min-width:110px}
+.specs b{font-family:var(--f-display);font-weight:500;font-size:clamp(22px,2.6vw,28px);font-variant-numeric:tabular-nums;letter-spacing:-.01em;white-space:nowrap}
+.specs b small{font-size:.55em;font-weight:500;margin-left:2px}
+.specs span{font-size:12.5px;opacity:.82;margin-top:2px}
+
+.ctas{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;width:100%}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-width:240px;height:42px;padding:0 28px;border-radius:4px;font-family:var(--f-body);font-weight:600;font-size:14px;text-decoration:none;border:0;cursor:pointer;transition:background .25s,color .25s,transform .2s}
+.btn.primary{background:var(--signal);color:#fff}
+.btn.primary:hover{background:#3457b1}
+.btn.ghost{background:rgba(255,255,255,.88);color:var(--ink)}
+.btn.ghost:hover{background:#fff}
+.btn.dark{background:var(--ink);color:#fff}
+.btn.dark:hover{background:#393c41}
+.btn.outline{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+.btn.outline:hover{background:var(--ink);color:#fff}
+@media (max-width:600px){.btn{min-width:0;width:100%;max-width:360px}.ctas{gap:12px;flex-direction:column;align-items:center}.specs{gap:16px 28px}.specs li{min-width:90px}}
+
+.chev{width:22px;height:22px;opacity:.75;animation:bob 2.2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+/* hero backgrounds */
+.bg-hero{background:radial-gradient(120% 80% at 50% 110%,#2d3a52 0%,#121722 55%,#07090d 100%)}
+#flow{position:absolute;inset:0;width:100%;height:100%;z-index:-1;opacity:.9}
+.bg-claims{background:
+  linear-gradient(180deg,rgba(6,22,28,.15),rgba(6,22,28,.65)),
+  repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 34px),
+  repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 34px),
+  radial-gradient(90% 70% at 70% 30%,#1e6b72 0%,#0e3640 50%,#06161c 100%)}
+.bg-liberty{background:
+  radial-gradient(70% 60% at 20% 20%,rgba(255,255,255,.14),transparent 60%),
+  linear-gradient(160deg,#b8202d 0%,#7a0f1a 55%,#3a070c 100%)}
+.bg-zoetis{background:
+  radial-gradient(80% 60% at 80% 80%,rgba(255,255,255,.55),transparent 60%),
+  linear-gradient(180deg,#dfe6ee 0%,#c4d0dc 55%,#a8b7c6 100%)}
+.bg-zoetis::after,.bg-liberty::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(255,255,255,.035) 0 2px,transparent 2px 22px)}
+.code-chip{font-family:var(--f-mono);font-size:12px;letter-spacing:.04em;display:inline-flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+.code-chip span{padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.14);backdrop-filter:blur(4px)}
+.panel.light .code-chip span{background:rgba(23,26,32,.08)}
+
+/* ---------- SPLIT TILES ---------- */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:12px;background:var(--paper)}
+.tile{position:relative;min-height:62vh;border-radius:6px;overflow:hidden;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:36px;isolation:isolate}
+.tile .bg{position:absolute;inset:0;z-index:-1}
+.tile h3{font-family:var(--f-display);font-weight:500;font-size:clamp(26px,3vw,36px);margin:0;line-height:1.1;text-wrap:balance}
+.tile p{margin:8px 0 0;max-width:46ch;opacity:.9}
+.tile .specs{justify-content:flex-start;gap:12px 36px;margin-top:22px}
+.tile .specs li{align-items:flex-start;min-width:0}
+.bg-stevens{background:linear-gradient(200deg,#a32638 0%,#5a1220 60%,#2a070e 100%)}
+.bg-gl{background:linear-gradient(200deg,#3c4655 0%,#1e2430 60%,#0c0f15 100%)}
+.tile .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(0,0,0,.45))}
+@media (max-width:800px){.split{grid-template-columns:1fr}.tile{min-height:auto;padding:120px 24px 28px}}
+
+/* ---------- SPEC SHEET (skills) ---------- */
+.sheet{padding:96px 20px 88px;background:var(--paper);color:var(--ink)}
+.sheet-inner{max-width:1100px;margin:0 auto}
+.sheet h2{font-family:var(--f-display);font-weight:500;font-size:clamp(30px,4vw,40px);margin:0;text-align:center;text-wrap:balance}
+.sheet .lede{text-align:center;color:var(--steel);margin:10px auto 0;max-width:60ch}
+.tabs{display:flex;justify-content:center;gap:4px;margin:36px auto 0;flex-wrap:wrap;background:var(--mist);border-radius:6px;padding:4px;width:fit-content;max-width:100%}
+.tabs button{border:0;background:transparent;font-family:var(--f-body);font-weight:600;font-size:13px;padding:9px 16px;border-radius:4px;cursor:pointer;color:var(--steel);transition:background .2s,color .2s}
+.tabs button[aria-selected="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.spec-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0 56px;margin-top:40px}
+.spec-row{display:grid;grid-template-columns:1fr;gap:4px;padding:18px 0;border-bottom:1px solid var(--line);min-width:0}
+.spec-row dt{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--steel)}
+.spec-row dd{margin:0;font-weight:500;font-size:15px}
+
+/* ---------- TIMELINE ---------- */
+.track{padding:88px 20px;background:var(--mist)}
+.track-inner{max-width:1100px;margin:0 auto}
+.track h2{font-family:var(--f-display);font-weight:500;font-size:clamp(30px,4vw,40px);margin:0;text-align:center}
+.rows{margin-top:44px;display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:200px 1fr auto;gap:8px 32px;align-items:baseline;padding:22px 0;border-top:1px solid var(--line)}
+.row:last-child{border-bottom:1px solid var(--line)}
+.row .when{font-family:var(--f-mono);font-size:12.5px;color:var(--steel);font-variant-numeric:tabular-nums}
+.row .what{min-width:0}
+.row .what b{font-family:var(--f-display);font-weight:600;font-size:17px}
+.row .what span{display:block;color:var(--steel);font-size:14px}
+.row .tag{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:#fff;color:var(--ink);white-space:nowrap}
+@media (max-width:700px){.row{grid-template-columns:1fr}.row .tag{justify-self:start}}
+
+/* ---------- CONTACT ---------- */
+.bg-contact{background:radial-gradient(100% 90% at 50% 0%,#2a2f3a 0%,#111318 60%,#050608 100%)}
+.contact-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;width:100%;max-width:960px;margin:40px auto 0;text-align:left}
+.card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:6px;padding:18px 20px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card dt{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;opacity:.7}
+.card dd{margin:0;font-weight:500;font-size:15px;overflow-wrap:anywhere;user-select:all}
+.card .copy{align-self:flex-start;background:rgba(255,255,255,.12);border:0;color:#fff;font:600 12px var(--f-body);padding:6px 12px;border-radius:4px;cursor:pointer}
+.card .copy:hover{background:rgba(255,255,255,.22)}
+@media (max-width:800px){.contact-list{grid-template-columns:1fr}}
+footer{background:var(--paper);color:var(--steel);text-align:center;font-size:12.5px;padding:22px 20px;display:flex;justify-content:center;gap:8px 24px;flex-wrap:wrap}
+footer a{text-decoration:none}
+footer a:hover{color:var(--ink)}
+
+/* reveal: visible at rest, gentle lift when JS adds .in */
+.lift{transition:transform .9s cubic-bezier(.2,.7,.2,1),opacity .9s}
+.js .lift:not(.in){transform:translateY(14px);opacity:.35}
+</style>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#top">KONGANI</a>
+  <nav class="links" aria-label="Sections">
+    <a href="#claims">Claims Pipeline</a>
+    <a href="#liberty">Liberty Coca-Cola</a>
+    <a href="#zoetis">Zoetis</a>
+    <a href="#research">Research</a>
+    <a href="#skills">Skills</a>
+  </nav>
+  <div class="nav-right">
+    <a href="https://github.com/nandini260856" target="_blank" rel="noopener">GitHub</a>
+    <a href="#contact">Contact</a>
+    <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="drawer">Menu</button>
+  </div>
+</header>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Menu">
+  <button class="close" id="closeBtn" aria-label="Close menu">✕</button>
+  <a href="#claims">Claims Pipeline</a>
+  <a href="#liberty">Liberty Coca-Cola</a>
+  <a href="#zoetis">Zoetis</a>
+  <a href="#research">Research &amp; Early Work</a>
+  <a href="#skills">Skills</a>
+  <a href="#timeline">Education</a>
+  <a href="#contact">Contact</a>
+  <a href="https://github.com/nandini260856" target="_blank" rel="noopener">GitHub</a>
+</aside>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="panel" aria-labelledby="h-hero">
+    <div class="bg bg-hero"></div>
+    <canvas id="flow" aria-hidden="true"></canvas>
+    <div class="lift in">
+      <p class="eyebrow">Data Engineer · Databricks Certified Professional</p>
+      <h1 id="h-hero">Nandini Kongani</h1>
+      <p class="sub">SQL-first data models, star schemas and tested pipelines in Snowflake, dbt, Databricks, Airflow and Azure. Healthcare claims, end to end.</p>
+    </div>
+    <div class="bottom">
+      <ul class="specs">
+        <li><b>3+<small>yrs</small></b><span>Data engineering</span></li>
+        <li><b>24h → 15<small>min</small></b><span>SAP + Kafka latency</span></li>
+        <li><b>14.8 → 1.7<small>%</small></b><span>Simulated denial rate</span></li>
+        <li><b>~$70K<small>/yr</small></b><span>Warehouse savings</span></li>
+      </ul>
+      <div class="ctas">
+        <a class="btn primary" href="#claims">View Work</a>
+        <a class="btn ghost" href="#contact">Get in Touch</a>
+      </div>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+  </section>
+
+  <!-- CLAIMS PROJECT -->
+  <section class="panel" id="claims" aria-labelledby="h-claims">
+    <div class="bg bg-claims"></div>
+    <div class="lift">
+      <p class="eyebrow">Featured Project · Healthcare Claims</p>
+      <h2 id="h-claims">NEMT Claims Pipeline</h2>
+      <p class="sub">30K+ medical transportation trips turned into priced, payer-ready claims. Eight pre-submission rules catch denials before they happen, and every 835 dollar reconciles.</p>
+      <div class="code-chip"><span>X12 837P</span><span>835 ERA</span><span>CARC</span><span>HCPCS</span><span>ICD-10</span></div>
+    </div>
+    <div class="bottom">
+      <ul class="specs">
+        <li><b>30K+</b><span>Trips processed</span></li>
+        <li><b>8</b><span>Pre-submission rules</span></li>
+        <li><b>1.7<small>%</small></b><span>Denials, down from 14.8%</span></li>
+        <li><b>12</b><span>835 reconciliation checks</span></li>
+      </ul>
+      <div class="ctas">
+        <a class="btn primary" href="https://github.com/nandini260856/nemt-claims-pipeline" target="_blank" rel="noopener">View on GitHub</a>
+        <a class="btn ghost" href="#claims-detail">How It Works</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLAIMS DETAIL SHEET -->
+  <section class="sheet" id="claims-detail" aria-labelledby="h-cd">
+    <div class="sheet-inner lift">
+      <h2 id="h-cd">Inside the pipeline</h2>
+      <p class="lede">SQL, Python, DuckDB and Airflow, tested with pytest and shipped through GitHub Actions, with Redshift DDL for the warehouse.</p>
+      <dl class="spec-grid">
+        <div class="spec-row"><dt>Rules</dt><dd>Eligibility, prior authorization, duplicates, timely filing, NPI and mileage validation before submission</dd></div>
+        <div class="spec-row"><dt>Data model</dt><dd>Star schema with claim, claim line, remittance and validation fact tables</dd></div>
+        <div class="spec-row"><dt>Remittance</dt><dd>835 files parsed and reconciled: every dollar billed, paid and adjusted accounted for</dd></div>
+        <div class="spec-row"><dt>Orchestration</dt><dd>Airflow DAGs over DuckDB, portable to Redshift via DDL</dd></div>
+        <div class="spec-row"><dt>Quality</dt><dd>pytest suites and 12 automated checks run in CI on every push</dd></div>
+        <div class="spec-row"><dt>Outcome</dt><dd>Simulated payer denial rate cut from 14.8% to 1.7%</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- LIBERTY -->
+  <section class="panel" id="liberty" aria-labelledby="h-lib">
+    <div class="bg bg-liberty"></div>
+    <div class="lift">
+      <p class="eyebrow">March 2026 – Present</p>
+      <h2 id="h-lib">Liberty Coca-Cola Beverages</h2>
+      <p class="sub">Data Engineer on the Enterprise Data Platform. I own the Snowflake BI model: staging, intermediate and star-schema marts in dbt, with tests on every model.</p>
+      <div class="code-chip"><span>Snowflake</span><span>dbt</span><span>Snowpipe Streaming</span><span>Kafka</span><span>Cortex</span><span>Power BI</span></div>
+    </div>
+    <div class="bottom">
+      <ul class="specs">
+        <li><b>&lt;15<small>min</small></b><span>Latency, was 24 hours</span></li>
+        <li><b>~40<small>%</small></b><span>Faster FP&amp;A month-end</span></li>
+        <li><b>~$70K<small>/yr</small></b><span>Warehouse tuning savings</span></li>
+        <li><b>~$150K<small>/yr</small></b><span>Projected, NL analytics</span></li>
+      </ul>
+      <div class="ctas">
+        <a class="btn ghost" href="#zoetis">Next Role</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZOETIS -->
+  <section class="panel light" id="zoetis" aria-labelledby="h-zo">
+    <div class="bg bg-zoetis"></div>
+    <div class="lift">
+      <p class="eyebrow">July 2025 – January 2026</p>
+      <h2 id="h-zo">Zoetis</h2>
+      <p class="sub">Global Manufacturing &amp; Supply Chain Analytics in regulated life sciences. Pipelines, a Unity Catalog migration, and LLM contract summarization with RAG on Azure.</p>
+      <div class="code-chip"><span>Azure Data Factory</span><span>Databricks</span><span>Unity Catalog</span><span>Synapse</span><span>Azure OpenAI</span></div>
+    </div>
+    <div class="bottom">
+      <ul class="specs">
+        <li><b>15+</b><span>ADF &amp; Databricks pipelines</span></li>
+        <li><b>30<small>%</small></b><span>Less maintenance effort</span></li>
+        <li><b>50+</b><span>Notebooks refactored</span></li>
+        <li><b>S&amp;OE</b><span>Backorder &amp; Forecast Lag KPIs</span></li>
+      </ul>
+      <div class="ctas">
+        <a class="btn dark" href="#research">Earlier Work</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPLIT TILES -->
+  <section class="split" id="research" aria-label="Research and early work">
+    <article class="tile lift">
+      <div class="bg bg-stevens"></div>
+      <p class="eyebrow">Sep 2024 – May 2025</p>
+      <h3>Stevens Institute of Technology</h3>
+      <p>Data Engineer Research Assistant. Rebuilt a high-priority ingestion pipeline and added PySpark and Great Expectations quality gates.</p>
+      <ul class="specs">
+        <li><b>4h → 15<small>min</small></b><span>Ingestion latency</span></li>
+        <li><b>99.5<small>%+</small></b><span>Uptime</span></li>
+        <li><b>~90<small>%</small></b><span>Critical issues caught</span></li>
+      </ul>
+    </article>
+    <article class="tile lift">
+      <div class="bg bg-gl"></div>
+      <p class="eyebrow">May 2022 – May 2023</p>
+      <h3>Great Learning</h3>
+      <p>Data Engineer Intern. Built high-volume pipelines and optimized compute spend.</p>
+      <ul class="specs">
+        <li><b>10M+</b><span>Records per day</span></li>
+        <li><b>99.9<small>%</small></b><span>Reliability</span></li>
+        <li><b>$180K<small>/yr</small></b><span>Compute savings</span></li>
+      </ul>
+    </article>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="sheet" id="skills" aria-labelledby="h-sk">
+    <div class="sheet-inner">
+      <h2 id="h-sk">Specifications</h2>
+      <p class="lede">The stack I work in every day.</p>
+      <div class="tabs" role="tablist" aria-label="Skill categories">
+        <button role="tab" id="t-sql" aria-selected="true" data-k="sql">SQL &amp; Modeling</button>
+        <button role="tab" id="t-wh" aria-selected="false" data-k="wh">Warehousing</button>
+        <button role="tab" id="t-py" aria-selected="false" data-k="py">Python &amp; Quality</button>
+        <button role="tab" id="t-hc" aria-selected="false" data-k="hc">Healthcare</button>
+        <button role="tab" id="t-ai" aria-selected="false" data-k="ai">Cloud &amp; AI</button>
+      </div>
+      <dl class="spec-grid" id="skillGrid" role="tabpanel" aria-live="polite"></dl>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="track" id="timeline" aria-labelledby="h-tl">
+    <div class="track-inner">
+      <h2 id="h-tl">Education &amp; Certifications</h2>
+      <div class="rows">
+        <div class="row"><span class="when">May 2025</span><div class="what"><b>MS in Computer Science</b><span>Stevens Institute of Technology</span></div><span class="tag">Degree</span></div>
+        <div class="row"><span class="when">May 2023</span><div class="what"><b>BE in Computer Science</b><span>Institute of Aeronautical Engineering, India · CGPA 9.4 / 10</span></div><span class="tag">Degree</span></div>
+        <div class="row"><span class="when">Professional</span><div class="what"><b>Databricks Certified Data Engineer Professional</b><span>Databricks</span></div><span class="tag">Certification</span></div>
+        <div class="row"><span class="when">Associate</span><div class="what"><b>Databricks Certified Data Engineer Associate</b><span>Databricks</span></div><span class="tag">Certification</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="panel" id="contact" aria-labelledby="h-ct" style="min-height:auto;padding-bottom:72px">
+    <div class="bg bg-contact"></div>
+    <div class="lift" style="width:100%">
+      <p class="eyebrow">Open to Data Engineering roles</p>
+      <h2 id="h-ct">Let's build your data platform</h2>
+      <p class="sub">Snowflake and dbt modeling, streaming ingestion, healthcare claims, and data for AI teams.</p>
+      <dl class="contact-list">
+        <div class="card"><dt>Email</dt><dd id="v-email">nandinikongani3@gmail.com</dd><button class="copy" data-t="v-email">Copy</button></div>
+        <div class="card"><dt>Phone</dt><dd id="v-phone">+1 475-251-0234</dd><button class="copy" data-t="v-phone">Copy</button></div>
+        <div class="card"><dt>GitHub</dt><dd id="v-gh">github.com/nandini260856</dd><a class="copy" href="https://github.com/nandini260856" target="_blank" rel="noopener" style="text-decoration:none">Open profile</a></div>
+      </dl>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>Nandini Kongani © 2026</span>
+  <a href="#claims">Projects</a>
+  <a href="#skills">Skills</a>
+  <a href="https://github.com/nandini260856" target="_blank" rel="noopener">GitHub</a>
+</footer>
+
+<script>
+document.documentElement.classList.add('js');
+
+// nav: solid on white sections
+const nav=document.getElementById('nav');
+const lightIds=new Set(['claims-detail','skills','timeline','zoetis','research']);
+function navState(){
+  const y=72;let solid=false;
+  document.querySelectorAll('main > section').forEach(s=>{
+    const r=s.getBoundingClientRect();
+    if(r.top<=y&&r.bottom>y&&(lightIds.has(s.id)))solid=true;
+  });
+  nav.classList.toggle('solid',solid);
+}
+addEventListener('scroll',navState,{passive:true});navState();
+
+// drawer
+const drawer=document.getElementById('drawer'),scrim=document.getElementById('scrim'),menuBtn=document.getElementById('menuBtn');
+function setMenu(o){drawer.classList.toggle('open',o);scrim.classList.toggle('open',o);menuBtn.setAttribute('aria-expanded',o)}
+menuBtn.onclick=()=>setMenu(true);
+document.getElementById('closeBtn').onclick=()=>setMenu(false);
+scrim.onclick=()=>setMenu(false);
+drawer.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
+
+// reveal
+const io='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15}):null;
+document.querySelectorAll('.lift').forEach(el=>io?io.observe(el):el.classList.add('in'));
+
+// skills tabs
+const skills={
+  sql:[['SQL','Advanced SQL: window functions, CTEs'],['Modeling','Dimensional modeling, star schema'],['Semantic layer','Semantic layers, dbt semantic models'],['Reporting','Report design, Power BI']],
+  wh:[['Warehouses','Snowflake, Azure Synapse, Delta Lake, DuckDB'],['Transform','dbt (staging, intermediate, marts)'],['Orchestration','Airflow, Azure Data Factory'],['Streaming','Kafka, Snowpipe Streaming'],['Patterns','ETL / ELT']],
+  py:[['Languages','Python, PySpark'],['Testing','pytest, Great Expectations, dbt tests'],['Assurance','Validation and reconciliation'],['Delivery','Git, CI/CD, GitHub Actions']],
+  hc:[['EDI','837P / 835 X12'],['Code sets','HCPCS, ICD-10, CARC denial codes'],['Rules','Eligibility, prior authorization, timely filing'],['Analytics','Denial analytics, remittance reconciliation']],
+  ai:[['Azure','Databricks, ADLS Gen2, OpenAI, AI Search'],['Governance','Unity Catalog'],['AI','Snowflake Cortex, LLMs (Claude, GPT), RAG']]
+};
+const grid=document.getElementById('skillGrid');
+function show(k){
+  grid.innerHTML=skills[k].map(([t,d])=>`<div class="spec-row"><dt>${t}</dt><dd>${d}</dd></div>`).join('');
+  document.querySelectorAll('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.k===k));
+  grid.setAttribute('aria-labelledby','t-'+k);
+  try{localStorage.setItem('skillTab',k)}catch(e){}
+}
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>show(b.dataset.k));
+let start='sql';try{const s=localStorage.getItem('skillTab');if(s&&skills[s])start=s}catch(e){}
+show(start);
+
+// copy buttons
+document.querySelectorAll('button.copy').forEach(b=>b.addEventListener('click',()=>{
+  const el=document.getElementById(b.dataset.t);const txt=el.textContent.trim();
+  const done=()=>{b.textContent='Copied';setTimeout(()=>b.textContent='Copy',1600)};
+  const fallback=()=>{const r=document.createRange();r.selectNodeContents(el);const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected, press copy'};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(done,fallback)}else fallback();
+}));
+
+// hero: flowing data streams (records moving through a pipeline)
+(function(){
+  const c=document.getElementById('flow');if(!c)return;const x=c.getContext('2d');
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let w,h,dpr,lanes=[],parts=[];
+  function size(){dpr=Math.min(devicePixelRatio||1,2);w=c.clientWidth;h=c.clientHeight;c.width=w*dpr;c.height=h*dpr;x.setTransform(dpr,0,0,dpr,0,0);
+    lanes=[];const n=Math.round(h/26);for(let i=0;i<n;i++)lanes.push({y:h*0.38+i*(h*0.6/n),amp:6+Math.random()*18,ph:Math.random()*6.28,f:.002+Math.random()*.002});
+    parts=[];for(let i=0;i<Math.round(w/6);i++)parts.push({l:Math.floor(Math.random()*lanes.length),x:Math.random()*w,v:.4+Math.random()*1.6,len:8+Math.random()*40});}
+  function ly(l,px,t){return l.y+Math.sin(px*l.f+l.ph+t*.0004)*l.amp*(px/w)}
+  function frame(t){
+    x.clearRect(0,0,w,h);
+    lanes.forEach(l=>{x.beginPath();for(let px=0;px<=w;px+=12){const py=ly(l,px,t);px?x.lineTo(px,py):x.moveTo(px,py)}x.strokeStyle='rgba(160,185,230,.07)';x.lineWidth=1;x.stroke()});
+    parts.forEach(p=>{const l=lanes[p.l];p.x+=p.v;if(p.x-p.len>w){p.x=-10;p.l=Math.floor(Math.random()*lanes.length)}
+      const g=x.createLinearGradient(p.x-p.len,0,p.x,0);g.addColorStop(0,'rgba(120,160,255,0)');g.addColorStop(1,'rgba(200,220,255,.75)');
+      x.beginPath();x.moveTo(p.x-p.len,ly(l,p.x-p.len,t));x.lineTo(p.x,ly(l,p.x,t));x.strokeStyle=g;x.lineWidth=1.4;x.stroke()});
+    if(!reduce)requestAnimationFrame(frame);
+  }
+  size();addEventListener('resize',size);requestAnimationFrame(frame);
+})();
+</script>
+
+</body>
+</html>
